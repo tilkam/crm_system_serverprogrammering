@@ -2,8 +2,6 @@ package com.yrgo.client;
 
 import com.yrgo.domain.Customer;
 import com.yrgo.services.customers.CustomerManagementService;
-import com.yrgo.services.customers.CustomerNotFoundException;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
