@@ -2,8 +2,17 @@
             "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 
 <beans>
+	<bean id="callService"
+		  class="com.yrgo.services.calls.CallHandlingServiceImpl">
+		<constructor-arg ref="customerService">
+		</constructor-arg>
+		<constructor-arg ref="diaryService">
+		</constructor-arg>
+	</bean>
 
 	<bean id="customerService" class="com.yrgo.services.customers.CustomerManagementMockImpl">
+	</bean>
+	<bean id="diaryService" class="com.yrgo.services.diary.DiaryManagementServiceMockImpl">
 	</bean>
 
 </beans>
