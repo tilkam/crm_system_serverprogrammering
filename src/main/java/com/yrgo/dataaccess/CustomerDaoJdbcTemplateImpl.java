@@ -14,6 +14,7 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
     private static final String CREATE_TABLE_SQL = "create table CUSTOMER(CUSTOMER_ID VARCHAR(5) PRIMARY KEY , COMPANY_NAME VARCHAR(50), NOTES VARCHAR(50))";
     private static final String GET_ALL_CUSTOMERS_SQL = "select * from CUSTOMER";
     private static final String GET_CUSTOMER_BY_ID_SQL = "select * from CUSTOMER where CUSTOMER_ID=?";
+    private static final String UPDATE_SQL = "UPDATE CUSTOMER SET COMPANY_NAME=?, NOTES=?  WHERE CUSTOMER_ID=?";
     private JdbcTemplate jdbcTemplate;
 
     public CustomerDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
@@ -47,7 +48,7 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
 
     @Override
     public void update(Customer customerToUpdate) throws RecordNotFoundException {
-
+        jdbcTemplate.update(UPDATE_SQL, customerToUpdate.getCompanyName(), customerToUpdate.getNotes(), customerToUpdate.getCustomerId());
     }
 
     @Override

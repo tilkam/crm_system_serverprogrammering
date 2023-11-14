@@ -30,6 +30,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
         try {
             customerDao.update(changedCustomer);
         } catch (RecordNotFoundException e) {
+            System.out.println("Something went wrong when trying to UPDATE customer");
             throw new RuntimeException(e);
         }
 
@@ -40,6 +41,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
         try {
             customerDao.delete(oldCustomer);
         } catch (RecordNotFoundException e) {
+            System.out.println("Something went wrong when trying to DELETE customer");
             throw new RuntimeException(e);
         }
     }
@@ -49,6 +51,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
         try {
             return customerDao.getById(customerId);
         } catch (RecordNotFoundException e) {
+            System.out.println("Error when trying to find CUSTOMER by ID");
             throw new RuntimeException(e);
 
         }
@@ -56,7 +59,13 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
 
     @Override
     public List<Customer> findCustomersByName(String name) {
-        return customerDao.getByName(name);
+        try{
+            return customerDao.getByName(name);
+        }catch(Exception e){
+            System.out.println("Error when trying to find CUSTOMER by name");
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
