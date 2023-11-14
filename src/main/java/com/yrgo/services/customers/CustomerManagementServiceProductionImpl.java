@@ -1,47 +1,61 @@
 package com.yrgo.services.customers;
 
 import com.yrgo.dataaccess.CustomerDao;
+import com.yrgo.dataaccess.RecordNotFoundException;
 import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
 
 import java.util.List;
 
-public class CustomerManagementServiceProductionImpl implements CustomerManagementService{
+public class CustomerManagementServiceProductionImpl implements CustomerManagementService {
 
     private CustomerDao customerDao;
 
-    public CustomerManagementServiceProductionImpl(CustomerDao customerDao){
+    public CustomerManagementServiceProductionImpl(CustomerDao customerDao) {
         this.customerDao = customerDao;
     }
 
     @Override
     public void newCustomer(Customer newCustomer) {
-
+        customerDao.create(newCustomer);
     }
 
     @Override
     public void updateCustomer(Customer changedCustomer) {
+        try {
+            customerDao.update(changedCustomer);
+        } catch (RecordNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     public void deleteCustomer(Customer oldCustomer) {
-
+        try {
+            customerDao.delete(oldCustomer);
+        } catch (RecordNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public Customer findCustomerById(String customerId) throws CustomerNotFoundException {
-        return null;
+        try {
+            return customerDao.getById(customerId);
+        } catch (RecordNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<Customer> findCustomersByName(String name) {
-        return null;
+        return customerDao.getByName(name);
     }
 
     @Override
     public List<Customer> getAllCustomers() {
-        return null;
+        return customerDao.getAllCustomers();
     }
 
     @Override

@@ -10,8 +10,9 @@ public class SimpleClient {
     public static void main(String[] args)  {
         ClassPathXmlApplicationContext container = new
                 ClassPathXmlApplicationContext("application.xml");
-        CustomerManagementService service = container.getBean(CustomerManagementService.class);
-
+        CustomerManagementService service = container.getBean("customerService", CustomerManagementService.class);
+        Customer newCustomer = new Customer("1", "compName", "someNotes");
+        service.newCustomer(newCustomer);
         //PRINT ALL CUSTOMERS
         List<Customer> customers = service.getAllCustomers();
         System.out.println("ALL CUSTOMERS:");
