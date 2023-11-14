@@ -2,6 +2,7 @@ package com.yrgo.client;
 
 import com.yrgo.domain.Customer;
 import com.yrgo.services.customers.CustomerManagementService;
+import com.yrgo.services.customers.CustomerNotFoundException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
@@ -12,7 +13,20 @@ public class SimpleClient {
                 ClassPathXmlApplicationContext("application.xml");
         CustomerManagementService service = container.getBean("customerService", CustomerManagementService.class);
         Customer newCustomer = new Customer("1", "compName", "someNotes");
+        Customer newCustomer2 = new Customer("2", "secondCompany", "someNotes");
         service.newCustomer(newCustomer);
+        service.newCustomer(newCustomer2);
+
+        try{
+            Customer findById = service.findCustomerById("1");
+            System.out.println(findById);
+        } catch (CustomerNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<Customer> c = service.findCustomersByName(newCustomer2.getCompanyName());
+        c.forEach(System.out::println);
+
         //PRINT ALL CUSTOMERS
         List<Customer> customers = service.getAllCustomers();
         System.out.println("ALL CUSTOMERS:");

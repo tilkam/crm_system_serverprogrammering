@@ -17,7 +17,12 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
 
     @Override
     public void newCustomer(Customer newCustomer) {
-        customerDao.create(newCustomer);
+        try{
+            customerDao.create(newCustomer);
+        }catch(Exception e){
+            System.out.println("CUSTOMER with id " + newCustomer.getCustomerId() + " already exists");
+        }
+
     }
 
     @Override
@@ -40,11 +45,12 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     }
 
     @Override
-    public Customer findCustomerById(String customerId) throws CustomerNotFoundException {
+    public Customer findCustomerById(String customerId) {
         try {
             return customerDao.getById(customerId);
         } catch (RecordNotFoundException e) {
             throw new RuntimeException(e);
+
         }
     }
 
@@ -60,11 +66,14 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
 
     @Override
     public Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException {
-        return null;
+        try {
+            return customerDao.getFullCustomerDetail(customerId);
+        } catch (RecordNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void recordCall(String customerId, Call callDetails) throws CustomerNotFoundException {
-
     }
 }

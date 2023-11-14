@@ -11,8 +11,9 @@ import java.util.List;
 
 public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
     private static final String INSERT_CUSTOMER_SQL = "insert into CUSTOMER (CUSTOMER_ID, COMPANY_NAME, NOTES) values (?, ?, ?) ";
-    private static final String CREATE_TABLE_SQL = "create table CUSTOMER(CUSTOMER_ID VARCHAR(5), COMPANY_NAME VARCHAR(50), NOTES VARCHAR(50))";
+    private static final String CREATE_TABLE_SQL = "create table CUSTOMER(CUSTOMER_ID VARCHAR(5) PRIMARY KEY , COMPANY_NAME VARCHAR(50), NOTES VARCHAR(50))";
     private static final String GET_ALL_CUSTOMERS_SQL = "select * from CUSTOMER";
+    private static final String GET_CUSTOMER_BY_ID_SQL = "select * from CUSTOMER where CUSTOMER_ID=?";
     private JdbcTemplate jdbcTemplate;
 
     public CustomerDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
@@ -34,12 +35,14 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
 
     @Override
     public Customer getById(String customerId) throws RecordNotFoundException {
-        return null;
+
+         return this.jdbcTemplate.queryForObject(GET_CUSTOMER_BY_ID_SQL,new CustomerMapper(),customerId);
+
     }
 
     @Override
     public List<Customer> getByName(String name) {
-        return null;
+        return jdbcTemplate.query("select * from CUSTOMER where COMPANY_NAME=?", new CustomerMapper(), name);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
 
     @Override
     public List<Customer> getAllCustomers() {
-        return jdbcTemplate.query(GET_ALL_CUSTOMERS_SQL, new BookMapper());
+        return jdbcTemplate.query(GET_ALL_CUSTOMERS_SQL, new CustomerMapper());
 
     }
 
@@ -69,7 +72,7 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
     }
 }
 
-class BookMapper implements RowMapper<Customer> {
+class CustomerMapper implements RowMapper<Customer> {
     @Override
     public Customer mapRow(ResultSet rs, int rowNumber) throws SQLException {
         String id = rs.getString(1);
