@@ -1,5 +1,7 @@
 package com.yrgo.domain;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -16,16 +18,16 @@ public class Call {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	private Date timeAndDate;
+	private LocalDateTime timeAndDate;
 
 	private String notes;
 
 	public Call(String notes){
 		// this defaults to a timestamp of "now"
-		this (notes, new java.util.Date());
+		this (notes, LocalDateTime.now());
 	}
 
-	public Call(String notes, Date timestamp){
+	public Call(String notes, LocalDateTime timestamp){
 		// this defaults to a timestamp of "now"
 		this.timeAndDate = timestamp;
 		this.notes = notes;
@@ -35,11 +37,11 @@ public class Call {
 		return this.timeAndDate + " : " + this.notes;
 	}
 
-	public Date getTimeAndDate() {
+	public LocalDateTime getTimeAndDate() {
 		return timeAndDate;
 	}
 
-	public void setTimeAndDate(Date timeAndDate) {
+	public void setTimeAndDate(LocalDateTime timeAndDate) {
 		this.timeAndDate = timeAndDate;
 	}
 
