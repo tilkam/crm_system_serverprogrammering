@@ -1,9 +1,12 @@
 package com.yrgo.client;
 
+import com.yrgo.domain.Action;
 import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
+import com.yrgo.services.calls.CallHandlingService;
 import com.yrgo.services.customers.CustomerManagementService;
 import com.yrgo.services.customers.CustomerNotFoundException;
+import com.yrgo.services.diary.DiaryManagementService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.time.LocalDate;
@@ -12,6 +15,8 @@ import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalQuery;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class SimpleClient {

@@ -25,7 +25,5 @@
     <bean id="customerService" class="com.yrgo.services.customers.CustomerManagementServiceProductionImpl">
 		<constructor-arg ref="customerDao">
 		</constructor-arg>
-
 	</bean>
-
 </beans>
