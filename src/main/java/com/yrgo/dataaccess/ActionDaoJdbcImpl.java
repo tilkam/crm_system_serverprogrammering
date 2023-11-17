@@ -48,7 +48,6 @@ public class ActionDaoJdbcImpl implements ActionDao {
 	}
 }
 
-
 class ActionRowMapper implements RowMapper<Action> {
 	public Action mapRow(ResultSet rs, int arg1) throws SQLException 	{
 		int actionId = rs.getInt(1);

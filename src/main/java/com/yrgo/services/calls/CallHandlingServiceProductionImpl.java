@@ -1,8 +1,12 @@
 package com.yrgo.services.calls;
 
+import com.yrgo.dataaccess.ActionDao;
 import com.yrgo.domain.Action;
 import com.yrgo.domain.Call;
+import com.yrgo.services.customers.CustomerManagementService;
+import com.yrgo.services.customers.CustomerManagementServiceProductionImpl;
 import com.yrgo.services.customers.CustomerNotFoundException;
+import com.yrgo.services.diary.DiaryManagementService;
 
 import java.util.Collection;
 
@@ -15,8 +19,21 @@ public class CallHandlingServiceProductionImpl implements CallHandlingService{
      * @param newCall
      * @param actions
      */
+    private CustomerManagementService customerService;
+    private ActionDao actionDao;
+    private DiaryManagementService diaryService;
+
+    public CallHandlingServiceProductionImpl(CustomerManagementService customerService, ActionDao actionDao, DiaryManagementService diaryService){
+        this.customerService = customerService;
+        this.actionDao = actionDao;
+        this.diaryService = diaryService;
+    }
     @Override
     public void recordCall(String customerId, Call newCall, Collection<Action> actions) throws CustomerNotFoundException {
-
+        customerService.recordCall(customerId, newCall);
+        actions.forEach(action -> {
+            actionDao.create(action);
+            diaryService.recordAction(action);
+        });
     }
 }

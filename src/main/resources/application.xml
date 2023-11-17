@@ -26,4 +26,22 @@
 		<constructor-arg ref="customerDao">
 		</constructor-arg>
 	</bean>
+    <bean id="actionDao" class="com.yrgo.dataaccess.ActionDaoJdbcImpl"
+        init-method="createTables">
+        <constructor-arg ref="jdbcTemplate">
+        </constructor-arg>
+
+    </bean>
+    <bean id="callService" class="com.yrgo.services.calls.CallHandlingServiceProductionImpl">
+        <constructor-arg ref="customerService">
+        </constructor-arg>
+        <constructor-arg ref="actionDao">
+        </constructor-arg>
+        <constructor-arg ref="diaryService">
+        </constructor-arg>
+    </bean>
+    <bean id="diaryService" class="com.yrgo.services.diary.DiaryManagementServiceProductionImpl">
+        <constructor-arg ref="actionDao">
+        </constructor-arg>
+    </bean>
 </beans>
