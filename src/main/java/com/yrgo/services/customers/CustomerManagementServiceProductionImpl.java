@@ -15,9 +15,6 @@ import java.util.List;
 public class CustomerManagementServiceProductionImpl implements CustomerManagementService {
     @Autowired
     private CustomerDao customerDao;
-    public CustomerManagementServiceProductionImpl(CustomerDao customerDao) {
-        this.customerDao = customerDao;
-    }
 
     @Override
     public void newCustomer(Customer newCustomer) {
