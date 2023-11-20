@@ -5,6 +5,7 @@ import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
 import com.yrgo.services.calls.CallHandlingService;
 import com.yrgo.services.customers.CustomerManagementService;
+import com.yrgo.services.customers.CustomerManagementServiceProductionImpl;
 import com.yrgo.services.customers.CustomerNotFoundException;
 import com.yrgo.services.diary.DiaryManagementService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -22,8 +23,9 @@ import java.util.List;
 public class SimpleClient {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext container = new
-                ClassPathXmlApplicationContext("application.xml");
-        CustomerManagementService service = container.getBean("customerService", CustomerManagementService.class);
+                ClassPathXmlApplicationContext("application-annotation.xml");
+        CustomerManagementService service = container.getBean(CustomerManagementService.class);
+        //CustomerManagementService service = container.getBean("customerService", CustomerManagementService.class);
         Customer newCustomer = new Customer("1", "compName", "someNotes");
         Customer newCustomer2 = new Customer("2", "secondCompany", "someNotes");
         service.newCustomer(newCustomer);
@@ -39,7 +41,7 @@ public class SimpleClient {
         service.updateCustomer(newCustomer2);
 
         System.out.println("UPDATED CUSTOMER:");
-        System.out.println(newCustomer2);
+        System.out.println(newCustomer2.getCompanyName());
 
         System.out.println("FIND CUSTOMER BY NAME:");
         List<Customer> c = service.findCustomersByName(newCustomer2.getCompanyName());

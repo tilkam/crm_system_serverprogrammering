@@ -4,8 +4,11 @@ import com.yrgo.domain.Action;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.Entity;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;

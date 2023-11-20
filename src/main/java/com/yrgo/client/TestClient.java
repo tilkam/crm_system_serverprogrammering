@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TestClient {
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
+        ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application-annotation.xml");
 
         CustomerManagementService customerService = container.getBean(CustomerManagementService.class);
         CallHandlingService callService = container.getBean(CallHandlingService.class);
