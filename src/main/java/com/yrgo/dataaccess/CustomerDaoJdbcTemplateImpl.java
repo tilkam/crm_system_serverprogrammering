@@ -2,12 +2,13 @@ package com.yrgo.dataaccess;
 
 import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import javax.annotation.PostConstruct;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,13 +23,10 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
     private static final String UPDATE_SQL = "UPDATE CUSTOMER SET COMPANY_NAME=?, NOTES=?  WHERE CUSTOMER_ID=?";
     private static final String DELETE_SQL = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID=?";
     private static final String GET_CUSTOMER_BY_ID_SQL = "select * from CUSTOMER where CUSTOMER_ID=?";
-
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public CustomerDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
+    @PostConstruct
     private void createTables() {
         try {
             jdbcTemplate.update(CREATE_CUSTOMER_TABLE_SQL);
