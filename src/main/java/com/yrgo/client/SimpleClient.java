@@ -1,5 +1,6 @@
 package com.yrgo.client;
 
+import com.yrgo.dataaccess.CustomerDaoJpaImpl;
 import com.yrgo.domain.Action;
 import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
@@ -8,6 +9,7 @@ import com.yrgo.services.customers.CustomerManagementService;
 import com.yrgo.services.customers.CustomerManagementServiceProductionImpl;
 import com.yrgo.services.customers.CustomerNotFoundException;
 import com.yrgo.services.diary.DiaryManagementService;
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.time.LocalDate;
@@ -49,12 +51,13 @@ public class SimpleClient {
 
         System.out.println("FULL CUSTOMER DETAILS: ");
         Call call = new Call(newCustomer.getNotes(), LocalDateTime.now());
+
         try {
             service.recordCall(newCustomer2.getCustomerId(), call);
             Customer details =  service.getFullCustomerDetail("2");
             System.out.println(details.getCustomerId());
             System.out.println(details.getNotes());
-            System.out.println(details.getCalls());
+            details.getCalls().forEach(System.out::println);
 
         } catch (CustomerNotFoundException e) {
             throw new RuntimeException(e);

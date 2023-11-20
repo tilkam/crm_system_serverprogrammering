@@ -4,6 +4,7 @@ import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
 import com.yrgo.services.customers.CustomerNotFoundException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -70,7 +71,7 @@ public class CustomerDaoJpaImpl implements CustomerDao {
             throw new RecordNotFoundException();
         }
 
-        List<Call> calls = em.createQuery("select call from Call as call where call.customerId = :customerId", Call.class)
+        List<Call> calls = em.createQuery("select calls from Call as calls where calls.customerId = :customerId", Call.class)
                 .setParameter("customerId", customerId)
                 .getResultList();
 
