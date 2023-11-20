@@ -7,9 +7,13 @@ import com.yrgo.services.customers.CustomerManagementService;
 import com.yrgo.services.customers.CustomerManagementServiceProductionImpl;
 import com.yrgo.services.customers.CustomerNotFoundException;
 import com.yrgo.services.diary.DiaryManagementService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-
+@Service("callService")
+@Transactional(propagation= Propagation.REQUIRES_NEW)
 public class CallHandlingServiceProductionImpl implements CallHandlingService{
     /**
      * Records a call with the customer management service, and also records
