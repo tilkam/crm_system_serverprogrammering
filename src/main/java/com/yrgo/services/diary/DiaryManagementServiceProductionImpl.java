@@ -1,12 +1,7 @@
 package com.yrgo.services.diary;
 
-import com.yrgo.dataaccess.ActionDao;
 import com.yrgo.domain.Action;
-import com.yrgo.services.calls.CallHandlingService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;

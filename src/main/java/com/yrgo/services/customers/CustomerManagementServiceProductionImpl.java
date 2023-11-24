@@ -80,6 +80,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     }
 
     @Override
+    @Transactional
     public void recordCall(String customerId, Call callDetails) throws CustomerNotFoundException {
         try {
             customerDao.addCall(callDetails, customerId);
