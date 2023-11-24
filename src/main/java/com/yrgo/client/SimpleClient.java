@@ -54,8 +54,7 @@ public class SimpleClient {
         try {
             service.recordCall(newCustomer2.getCustomerId(), call);
             Customer details =  service.getFullCustomerDetail("2");
-            System.out.println(details.getCustomerId());
-            System.out.println(details.getNotes());
+            System.out.println(details);
             details.getCalls().forEach(System.out::println);
 
         } catch (CustomerNotFoundException e) {

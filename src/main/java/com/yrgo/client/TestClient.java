@@ -43,7 +43,13 @@ public class TestClient {
         for (Action next : incompleteActions) {
             System.out.println(next);
         }
+    try{
+        Customer customer = customerService.getFullCustomerDetail("CS03939");
+        System.out.println(customer);
 
+    } catch (CustomerNotFoundException e) {
+        throw new RuntimeException(e);
+    }
         container.close();
     }
 }

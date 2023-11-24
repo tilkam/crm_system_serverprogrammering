@@ -4,12 +4,10 @@ import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
 import com.yrgo.services.customers.CustomerNotFoundException;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -44,8 +42,8 @@ public class CustomerDaoJpaImpl implements CustomerDao {
     }
 
     @Override
-    public void update(Customer customerToUpdate) throws RecordNotFoundException {
-       em.merge(customerToUpdate);
+    public void update(Customer customerToUpdate)  {
+            em.merge(customerToUpdate);
     }
 
 
@@ -63,21 +61,13 @@ public class CustomerDaoJpaImpl implements CustomerDao {
 
     @Override
     public Customer getFullCustomerDetail(String customerId) throws RecordNotFoundException {
-        Customer customer = em.createQuery("select customer from Customer as customer where customer.customerId=:customerId", Customer.class)
-                .setParameter("customerId", customerId)
-                .getSingleResult();
-
+        TypedQuery<Customer> customer = em.createQuery("select customer from Customer as customer " +
+                "left join fetch customer.calls where customer.customerId=:customerId", Customer.class).setParameter("customerId", customerId);
         if (customer == null) {
             throw new RecordNotFoundException();
         }
 
-        List<Call> calls = em.createQuery("select calls from Call as calls where calls.customerId = :customerId", Call.class)
-                .setParameter("customerId", customerId)
-                .getResultList();
-
-        customer.getCalls().addAll(calls);
-
-        return customer;
+        return customer.getSingleResult();
     }
 
     @Override
