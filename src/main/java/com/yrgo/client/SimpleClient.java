@@ -27,8 +27,8 @@ public class SimpleClient {
         ClassPathXmlApplicationContext container = new
                 ClassPathXmlApplicationContext("application-annotation.xml");
         CustomerManagementService service = container.getBean(CustomerManagementService.class);
-        Customer newCustomer = new Customer("1", "compName", "someNotes");
-        Customer newCustomer2 = new Customer("2", "secondCompany", "someNotes");
+        Customer newCustomer = new Customer("1", "SEB", "notes for SEB");
+        Customer newCustomer2 = new Customer("2", "H&M", "notes for H&M");
         service.newCustomer(newCustomer);
         service.newCustomer(newCustomer2);
         System.out.println("FIND CUSTOMER BY ID:");
@@ -38,14 +38,14 @@ public class SimpleClient {
         } catch (CustomerNotFoundException e) {
             throw new RuntimeException(e);
         }
-        newCustomer2.setCompanyName("UPDATEDNAME");
+        newCustomer2.setCompanyName("Hennes & Mauritz");
         service.updateCustomer(newCustomer2);
 
         System.out.println("UPDATED CUSTOMER:");
         System.out.println(newCustomer2.getCompanyName());
 
         System.out.println("FIND CUSTOMER BY NAME:");
-        List<Customer> c = service.findCustomersByName(newCustomer2.getCompanyName());
+        List<Customer> c = service.findCustomersByName("Hennes & Mauritz");
         c.forEach(System.out::println);
 
         System.out.println("FULL CUSTOMER DETAILS: ");
@@ -54,7 +54,7 @@ public class SimpleClient {
         try {
             service.recordCall(newCustomer2.getCustomerId(), call);
             Customer details =  service.getFullCustomerDetail("2");
-            System.out.println(details);
+            System.out.println(details.getCalls());
             details.getCalls().forEach(System.out::println);
 
         } catch (CustomerNotFoundException e) {

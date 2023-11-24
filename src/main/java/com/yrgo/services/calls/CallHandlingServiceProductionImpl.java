@@ -26,11 +26,12 @@ public class CallHandlingServiceProductionImpl implements CallHandlingService{
      * @param newCall
      * @param actions
      */
-
     private CustomerManagementService customerService;
     private ActionDao actionDao;
     private DiaryManagementService diaryService;
-    public CallHandlingServiceProductionImpl(CustomerManagementService customerService, ActionDao actionDao, DiaryManagementService diaryService){
+    public CallHandlingServiceProductionImpl(CustomerManagementService customerService, ActionDao actionDao,
+                                             DiaryManagementService diaryService){
+
         this.customerService = customerService;
         this.actionDao = actionDao;
         this. diaryService = diaryService;

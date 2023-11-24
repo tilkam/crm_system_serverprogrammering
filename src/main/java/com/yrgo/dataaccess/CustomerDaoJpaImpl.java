@@ -77,7 +77,7 @@ public class CustomerDaoJpaImpl implements CustomerDao {
         if (customer == null) {
             throw new RecordNotFoundException();
         }
-
+        customer.addCall(newCall);
         newCall.setCustomerId(customerId);
         customer.getCalls().add(newCall);
 
