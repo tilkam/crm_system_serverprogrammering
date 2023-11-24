@@ -26,12 +26,15 @@ public class CallHandlingServiceProductionImpl implements CallHandlingService{
      * @param newCall
      * @param actions
      */
-    @Autowired
+
     private CustomerManagementService customerService;
-    @Autowired
     private ActionDao actionDao;
-    @Autowired
     private DiaryManagementService diaryService;
+    public CallHandlingServiceProductionImpl(CustomerManagementService customerService, ActionDao actionDao, DiaryManagementService diaryService){
+        this.customerService = customerService;
+        this.actionDao = actionDao;
+        this. diaryService = diaryService;
+    }
 
     @Transactional
     public void recordCall(String customerId, Call newCall, Collection<Action> actions) throws CustomerNotFoundException {

@@ -27,7 +27,6 @@ public class SimpleClient {
         ClassPathXmlApplicationContext container = new
                 ClassPathXmlApplicationContext("application-annotation.xml");
         CustomerManagementService service = container.getBean(CustomerManagementService.class);
-        //CustomerManagementService service = container.getBean("customerService", CustomerManagementService.class);
         Customer newCustomer = new Customer("1", "compName", "someNotes");
         Customer newCustomer2 = new Customer("2", "secondCompany", "someNotes");
         service.newCustomer(newCustomer);

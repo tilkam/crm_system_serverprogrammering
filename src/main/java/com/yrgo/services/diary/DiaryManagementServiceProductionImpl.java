@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
+@Service("diaryService")
 @Transactional
 public class DiaryManagementServiceProductionImpl implements DiaryManagementService{
 
