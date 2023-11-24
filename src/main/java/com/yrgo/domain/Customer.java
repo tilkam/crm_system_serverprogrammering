@@ -1,5 +1,7 @@
 package com.yrgo.domain;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class Customer {
 
 	private String notes;
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(fetch = javax.persistence.FetchType.EAGER, mappedBy = "customerId", cascade = CascadeType.ALL)
 	private List<Call> calls;
 
 	public Customer(String customerId, String companyName, String email,
@@ -67,7 +69,7 @@ public class Customer {
 	public String getNotes() {
 		return notes;
 	}
-
+	@Transactional
 	public List<Call> getCalls() {
 		return calls;
 	}

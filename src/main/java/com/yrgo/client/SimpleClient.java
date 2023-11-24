@@ -1,12 +1,15 @@
 package com.yrgo.client;
 
+import com.yrgo.dataaccess.CustomerDaoJpaImpl;
 import com.yrgo.domain.Action;
 import com.yrgo.domain.Call;
 import com.yrgo.domain.Customer;
 import com.yrgo.services.calls.CallHandlingService;
 import com.yrgo.services.customers.CustomerManagementService;
+import com.yrgo.services.customers.CustomerManagementServiceProductionImpl;
 import com.yrgo.services.customers.CustomerNotFoundException;
 import com.yrgo.services.diary.DiaryManagementService;
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.time.LocalDate;
@@ -22,8 +25,8 @@ import java.util.List;
 public class SimpleClient {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext container = new
-                ClassPathXmlApplicationContext("application.xml");
-        CustomerManagementService service = container.getBean("customerService", CustomerManagementService.class);
+                ClassPathXmlApplicationContext("application-annotation.xml");
+        CustomerManagementService service = container.getBean(CustomerManagementService.class);
         Customer newCustomer = new Customer("1", "compName", "someNotes");
         Customer newCustomer2 = new Customer("2", "secondCompany", "someNotes");
         service.newCustomer(newCustomer);
@@ -39,7 +42,7 @@ public class SimpleClient {
         service.updateCustomer(newCustomer2);
 
         System.out.println("UPDATED CUSTOMER:");
-        System.out.println(newCustomer2);
+        System.out.println(newCustomer2.getCompanyName());
 
         System.out.println("FIND CUSTOMER BY NAME:");
         List<Customer> c = service.findCustomersByName(newCustomer2.getCompanyName());
@@ -47,12 +50,13 @@ public class SimpleClient {
 
         System.out.println("FULL CUSTOMER DETAILS: ");
         Call call = new Call(newCustomer.getNotes(), LocalDateTime.now());
+
         try {
             service.recordCall(newCustomer2.getCustomerId(), call);
             Customer details =  service.getFullCustomerDetail("2");
             System.out.println(details.getCustomerId());
             System.out.println(details.getNotes());
-            System.out.println(details.getCalls());
+            details.getCalls().forEach(System.out::println);
 
         } catch (CustomerNotFoundException e) {
             throw new RuntimeException(e);

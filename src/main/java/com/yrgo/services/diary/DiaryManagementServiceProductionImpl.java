@@ -3,19 +3,22 @@ package com.yrgo.services.diary;
 import com.yrgo.dataaccess.ActionDao;
 import com.yrgo.domain.Action;
 import com.yrgo.services.calls.CallHandlingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service("diaryService")
+@Transactional
 public class DiaryManagementServiceProductionImpl implements DiaryManagementService{
-    private Set<Action> allActions= new HashSet<Action>();
-    private ActionDao actionDao;
 
-    public DiaryManagementServiceProductionImpl(ActionDao actionDao){
-       this.actionDao = actionDao;
-    }
+    private Set<Action> allActions= new HashSet<>();
 
 
     /**
@@ -23,7 +26,7 @@ public class DiaryManagementServiceProductionImpl implements DiaryManagementServ
      *
      * @param action
      */
-    @Override
+
     public void recordAction(Action action) {
         allActions.add(action);
     }
@@ -33,7 +36,8 @@ public class DiaryManagementServiceProductionImpl implements DiaryManagementServ
      *
      * @param requiredUser
      */
-    @Override
+
+
     public List<Action> getAllIncompleteActions(String requiredUser) {
         return allActions.stream().filter(action -> !action.isComplete() && action.getOwningUser().equals(requiredUser)).collect(Collectors.toList());
     }
